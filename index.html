@@ -13,7 +13,7 @@
   <body>
     <a-scene embedded arjs="sourceType: webcam;">
       <!-- Main Marker: Shows the scene -->
-      <a-marker type="pattern" url= pattern-main.patt>
+      <a-marker type="pattern" url= "pattern-main.patt">
         <!-- Scene 1 -->
         <a-entity id="scene1">
           <a-box position="0 0.5 0" color="blue"></a-box>
@@ -26,10 +26,10 @@
       </a-marker>
 
       <!-- Arrow Right Marker (next) -->
-      <a-marker id="nextMarker" type="pattern" url= pattern-Arrow_right.patt></a-marker>
+      <a-marker id="nextMarker" type="pattern" url= "pattern-Arrow_right.patt"></a-marker>
 
       <!-- Arrow Left Marker (previous) -->
-      <a-marker id="prevMarker" type="pattern" url= pattern-Arrow_left.patt></a-marker>
+      <a-marker id="prevMarker" type="pattern" url= "pattern-Arrow_left.patt"></a-marker>
 
       <a-entity camera></a-entity>
     </a-scene>
