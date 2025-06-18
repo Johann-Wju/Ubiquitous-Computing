@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720;">
+  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1920; sourceHeight: 1080;">
 
     <!-- 🔷 Your custom main marker -->
     <a-marker type="pattern" url="pattern-main.patt">
@@ -29,10 +29,14 @@
     </a-marker>
 
     <!-- ⏩ Right Arrow Marker -->
-    <a-marker id="nextMarker" type="pattern" url="pattern-Arrow_right.patt"></a-marker>
+    <a-marker id="nextMarker" type="pattern" url="pattern-Arrow_right.patt">
+      <a-box position="0 0.5 0" color="orange"></a-box>
+    </a-marker>
 
     <!-- ⏪ Left Arrow Marker -->
-    <a-marker id="prevMarker" type="pattern" url="pattern-Arrow_left.patt"></a-marker>
+    <a-marker id="prevMarker" type="pattern" url="pattern-Arrow_left.patt">
+      <a-box position="0 0.5 0" color="purple"></a-box>
+    </a-marker>
 
     <!-- 🧪 Hiro marker for debugging -->
     <a-marker preset="hiro">
