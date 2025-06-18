@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>AR.js Scene Switcher</title>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
-    <style>
-      body { margin: 0; overflow: hidden; }
-    </style>
-  </head>
 
-  <body>
-    <a-scene embedded arjs="sourceType: webcam;">
-      <!-- Main Marker: Shows the scene -->
-      <a-marker type="pattern" url= "pattern-main.patt">
-        <!-- Scene 1 -->
-        <a-entity id="scene1">
-          <a-box position="0 0.5 0" color="blue"></a-box>
-        </a-entity>
+<head>
+  <meta charset="UTF-8" />
+  <title>AR.js Scene Switcher</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
 
-        <!-- Scene 2 (hidden by default) -->
-        <a-entity id="scene2" visible="false">
-          <a-sphere position="0 0.5 0" color="green"></a-sphere>
-        </a-entity>
-      </a-marker>
+<body>
+  <a-scene embedded arjs="sourceType: webcam;">
+    <!-- Main Marker: Shows the scene -->
+    <a-marker type="pattern" url="pattern-main.patt">
+      <!-- Scene 1 -->
+      <a-entity id="scene1">
+        <a-box position="0 0.5 0" color="blue"></a-box>
+      </a-entity>
 
-      <!-- Arrow Right Marker (next) -->
-      <a-marker id="nextMarker" type="pattern" url= "pattern-Arrow_right.patt"></a-marker>
+      <!-- Scene 2 (hidden by default) -->
+      <a-entity id="scene2" visible="false">
+        <a-sphere position="0 0.5 0" color="green"></a-sphere>
+      </a-entity>
+    </a-marker>
 
-      <!-- Arrow Left Marker (previous) -->
-      <a-marker id="prevMarker" type="pattern" url= "pattern-Arrow_left.patt"></a-marker>
+    <!-- Arrow Right Marker (next) -->
+    <a-marker id="nextMarker" type="pattern" url="pattern-Arrow_right.patt"></a-marker>
 
-      <a-entity camera></a-entity>
-    </a-scene>
+    <!-- Arrow Left Marker (previous) -->
+    <a-marker id="prevMarker" type="pattern" url="pattern-Arrow_left.patt"></a-marker>
 
-    <script src="script.js"></script>
-  </body>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <a-scene embedded arjs>
+    <!-- create your content here. just a box for now -->
+    <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
+    <!-- define a camera which will move according to the marker position -->
+    <a-marker-camera preset='hiro'></a-marker-camera>
+  </a-scene>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
