@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>AR Button Switch</title>
+    <meta charset="UTF-8" />
+    <title>AR.js Scene Switcher</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
     <style>
@@ -12,35 +12,28 @@
 
   <body>
     <a-scene embedded arjs="sourceType: webcam;">
-      <!-- Marker -->
-      <a-marker preset="hiro">
+      <!-- Main Marker: Shows the scene -->
+      <a-marker type="pattern" url="main-marker.patt">
+        <!-- Scene 1 -->
+        <a-entity id="scene1">
+          <a-box position="0 0.5 0" color="blue"></a-box>
+        </a-entity>
 
-        <!-- Object 1 -->
-        <a-box id="box1" position="0 0.5 0" color="red"></a-box>
-
-        <!-- Object 2 (hidden initially) -->
-        <a-sphere id="sphere1" position="0 0.5 0" color="blue" visible="false"></a-sphere>
-
-        <!-- AR Button -->
-        <a-plane
-          id="toggleBtn"
-          position="0 0 0.5"
-          width="0.5"
-          height="0.25"
-          color="#00FFAA"
-          class="clickable"
-          event-set__enter="_event: mouseenter; color: #FFCC00"
-          event-set__leave="_event: mouseleave; color: #00FFAA"
-        >
-          <a-text value="Switch" align="center" position="0 0 0.01" color="black" width="1"></a-text>
-        </a-plane>
-
+        <!-- Scene 2 (hidden by default) -->
+        <a-entity id="scene2" visible="false">
+          <a-sphere position="0 0.5 0" color="green"></a-sphere>
+        </a-entity>
       </a-marker>
+
+      <!-- Arrow Right Marker (next) -->
+      <a-marker id="nextMarker" type="pattern" url="arrow-right.patt"></a-marker>
+
+      <!-- Arrow Left Marker (previous) -->
+      <a-marker id="prevMarker" type="pattern" url="arrow-left.patt"></a-marker>
 
       <a-entity camera></a-entity>
     </a-scene>
 
-    <!-- External Script -->
     <script src="script.js"></script>
   </body>
 </html>
