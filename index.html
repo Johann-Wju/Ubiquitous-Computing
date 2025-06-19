@@ -16,52 +16,7 @@
     <a-marker type="pattern" url="markers\pattern-letterA.patt">
 
       <a-entity id="scene1">
-        <a-gltf-model src="models/pizza_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene2" visible="false">
-        <a-gltf-model src="models/chicken_paprika_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene3" visible="false">
-        <a-gltf-model src="models/best_spring_sandwitch_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene4" visible="false">
-        <a-gltf-model src="models/food_delicious_nasi_lemak_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene5" visible="false">
-        <a-gltf-model src="models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene6" visible="false">
-        <a-gltf-model src="models/grilled_sandwich_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene7" visible="false">
-        <a-gltf-model src="models/langos_without_topping_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene8" visible="false">
-        <a-gltf-model src="models/onigiri_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene9" visible="false">
-        <a-gltf-model src="models/tamago_sushi_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
-        </a-gltf-model>
-      </a-entity>
-
-      <a-entity id="scene10" visible="false">
-        <a-gltf-model src="models/toro_sushi_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+        <a-gltf-model src="models\best_spring_sandwitch_gltf\scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
         </a-gltf-model>
       </a-entity>
 
@@ -69,18 +24,23 @@
 
     <!-- ⏩ Right Arrow Marker -->
     <a-marker id="nextMarker" type="pattern" url="markers\pattern-letterB.patt">
+
       <a-cone position="0 0 0" rotation="0 90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
         color="red"></a-cone>
+
     </a-marker>
 
     <!-- ⏪ Left Arrow Marker -->
     <a-marker id="prevMarker" type="pattern" url="markers\pattern-letterC.patt">
+
       <a-cone position="0 0 0" rotation="0 -90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
         color="red"></a-cone>
+
     </a-marker>
 
     <!-- 🎥 Static camera -->
     <a-entity camera></a-entity>
+
   </a-scene>
 
   <script src="script.js"></script>
