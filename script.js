@@ -3,13 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "models/pizza_gltf/scene.gltf",
     "models/chicken_paprika_gltf/scene.gltf",
     "models/best_spring_sandwitch_gltf/scene.gltf",
-    "models/food_delicious_nasi_lemak_gltf/scene.gltf",
     "models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf",
-    "models/grilled_sandwich_gltf/scene.gltf",
-    "models/langos_without_topping_gltf/scene.gltf",
-    "models/onigiri_gltf/scene.gltf",
-    "models/tamago_sushi_gltf/scene.gltf",
-    "models/toro_sushi_gltf/scene.gltf"
+    "models/langos_without_topping_gltf/scene.gltf"
   ];
 
   let currentIndex = 0;
