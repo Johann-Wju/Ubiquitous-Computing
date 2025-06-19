@@ -15,24 +15,24 @@
     <!-- 🔷 Your custom main marker -->
     <a-marker type="pattern" url="markers\pattern-main.patt">
       <a-entity id="scene1">
-        <a-gltf-model src="models/pizza_gltf/scene.gltf" position="0 0 0" scale="0.5 0.5 0.5" rotation="0 180 0">
+        <a-gltf-model src="models/pizza_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
         </a-gltf-model>
       </a-entity>
 
       <a-entity id="scene2" visible="false">
-        <a-gltf-model src="models/chicken_paprika_gltf/scene.gltf" position="0 0 0" scale="0.5 0.5 0.5" rotation="0 180 0">
+        <a-gltf-model src="models/chicken_paprika_gltf/scene.gltf" position="0 0 0" scale="1 1 1" rotation="0 0 0">
         </a-gltf-model>
       </a-entity>
     </a-marker>
 
     <!-- ⏩ Right Arrow Marker -->
-    <a-marker id="nextMarker" type="pattern" url="markers/pattern-Arrow_right.patt">
+    <a-marker id="nextMarker" type="pattern" url="markers/pattern-arrow_right.patt">
       <a-cone position="0 0 0" rotation="0 90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
         color="red"></a-cone>
     </a-marker>
 
     <!-- ⏪ Left Arrow Marker -->
-    <a-marker id="prevMarker" type="pattern" url="markers/pattern-Arrow_left.patt">
+    <a-marker id="prevMarker" type="pattern" url="markers/pattern-arrow_left.patt">
       <a-cone position="0 0 0" rotation="0 -90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
         color="red"></a-cone>
     </a-marker>
