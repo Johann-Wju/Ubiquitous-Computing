@@ -1,16 +1,14 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    /* prevent scrolling */
-    height: 100%;
-    background: #111;
-    /* dark background to reduce distraction */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  background: transparent;
 }
 
 a-scene {
-    width: 100vw;
-    height: 100vh;
-    display: block;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  background-color: transparent !important; /* Ensure no solid bg */
 }
