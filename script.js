@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentScene = 1;
   let cooldown = false;
 
+  let nextSeenTime = null;
+  let prevSeenTime = null;
+
   function switchScene(direction) {
     if (cooldown) return;
 
@@ -21,16 +24,30 @@ document.addEventListener("DOMContentLoaded", () => {
       currentScene = 1;
     }
 
-    // Prevent rapid switching
+    // Add cooldown to prevent rapid switching
     cooldown = true;
     setTimeout(() => cooldown = false, 1000);
   }
 
+  nextMarker.addEventListener("markerFound", () => {
+    nextSeenTime = Date.now();
+  });
+
   nextMarker.addEventListener("markerLost", () => {
-    switchScene("next");
+    const heldTime = Date.now() - nextSeenTime;
+    if (heldTime > 500) {  // Only switch if held at least 500ms
+      switchScene("next");
+    }
+  });
+
+  prevMarker.addEventListener("markerFound", () => {
+    prevSeenTime = Date.now();
   });
 
   prevMarker.addEventListener("markerLost", () => {
-    switchScene("prev");
+    const heldTime = Date.now() - prevSeenTime;
+    if (heldTime > 500) {
+      switchScene("prev");
+    }
   });
 });
