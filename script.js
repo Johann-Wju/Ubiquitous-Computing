@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const scene1 = document.querySelector("#scene1");
-  const scene2 = document.querySelector("#scene2");
+  // Collect all scenes by ID pattern "scene" + number (e.g. scene1, scene2, ...)
+  const scenes = [];
+  let i = 1;
+  while (true) {
+    const scene = document.querySelector(`#scene${i}`);
+    if (!scene) break;
+    scenes.push(scene);
+    i++;
+  }
 
   const nextMarker = document.querySelector("#nextMarker");
   const prevMarker = document.querySelector("#prevMarker");
@@ -14,17 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchScene(direction) {
     if (cooldown) return;
 
-    if (direction === "next" && currentScene === 1) {
-      scene1.setAttribute("visible", false);
-      scene2.setAttribute("visible", true);
-      currentScene = 2;
-    } else if (direction === "prev" && currentScene === 2) {
-      scene2.setAttribute("visible", false);
-      scene1.setAttribute("visible", true);
-      currentScene = 1;
+    // Hide current scene
+    scenes[currentScene - 1].setAttribute("visible", false);
+
+    if (direction === "next") {
+      currentScene = currentScene === scenes.length ? 1 : currentScene + 1;
+    } else if (direction === "prev") {
+      currentScene = currentScene === 1 ? scenes.length : currentScene - 1;
     }
 
-    // Add cooldown to prevent rapid switching
+    // Show new scene
+    scenes[currentScene - 1].setAttribute("visible", true);
+
+    // Cooldown to prevent rapid switching
     cooldown = true;
     setTimeout(() => cooldown = false, 1000);
   }
@@ -35,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextMarker.addEventListener("markerLost", () => {
     const heldTime = Date.now() - nextSeenTime;
-    if (heldTime > 500) {  // Only switch if held at least 500ms
+    if (heldTime > 500) {
       switchScene("next");
     }
   });
