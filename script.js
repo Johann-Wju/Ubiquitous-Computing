@@ -1,39 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Collect all scenes by ID pattern "scene" + number (e.g. scene1, scene2, ...)
-  const scenes = [];
-  let i = 1;
-  while (true) {
-    const scene = document.querySelector(`#scene${i}`);
-    if (!scene) break;
-    scenes.push(scene);
-    i++;
+  const modelPaths = [
+    "models/pizza_gltf/scene.gltf",
+    "models/chicken_paprika_gltf/scene.gltf",
+    "models/best_spring_sandwitch_gltf/scene.gltf",
+    "models/food_delicious_nasi_lemak_gltf/scene.gltf",
+    "models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf",
+    "models/grilled_sandwich_gltf/scene.gltf",
+    "models/langos_without_topping_gltf/scene.gltf",
+    "models/onigiri_gltf/scene.gltf",
+    "models/tamago_sushi_gltf/scene.gltf",
+    "models/toro_sushi_gltf/scene.gltf"
+  ];
+
+  let currentIndex = 0;
+  const modelContainer = document.querySelector("#modelContainer");
+
+  function loadModel(index) {
+    // Clear previous model
+    modelContainer.innerHTML = "";
+
+    const model = document.createElement("a-gltf-model");
+    model.setAttribute("src", modelPaths[index]);
+    model.setAttribute("position", "0 0 0");
+    model.setAttribute("scale", "1 1 1");
+    model.setAttribute("rotation", "0 0 0");
+
+    modelContainer.appendChild(model);
   }
+
+  loadModel(currentIndex); // Initial model
 
   const nextMarker = document.querySelector("#nextMarker");
   const prevMarker = document.querySelector("#prevMarker");
 
-  let currentScene = 1;
   let cooldown = false;
-
   let nextSeenTime = null;
   let prevSeenTime = null;
 
   function switchScene(direction) {
     if (cooldown) return;
 
-    // Hide current scene
-    scenes[currentScene - 1].setAttribute("visible", false);
-
     if (direction === "next") {
-      currentScene = currentScene === scenes.length ? 1 : currentScene + 1;
+      currentIndex = (currentIndex + 1) % modelPaths.length;
     } else if (direction === "prev") {
-      currentScene = currentScene === 1 ? scenes.length : currentScene - 1;
+      currentIndex = (currentIndex - 1 + modelPaths.length) % modelPaths.length;
     }
 
-    // Show new scene
-    scenes[currentScene - 1].setAttribute("visible", true);
+    loadModel(currentIndex);
 
-    // Cooldown to prevent rapid switching
     cooldown = true;
     setTimeout(() => cooldown = false, 1000);
   }
