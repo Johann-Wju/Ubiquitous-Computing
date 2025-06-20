@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <title>Virtual Cookbook</title>
 
-   <!-- Imported Scripts -->
+  <!-- Imported Scripts -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
 
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <div id="version-tag">v1.4</div>
+  <div id="version-tag">v1.5</div>
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1920; sourceHeight: 1080;">
 
     <!-- Custom main marker container -->
@@ -26,16 +26,21 @@
     <!-- Right Arrow Marker -->
     <a-marker id="nextMarker" type="pattern" url="markers/pattern-letterB.patt">
 
-      <a-cone position="0 0 0" rotation="0 90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
-        color="red"></a-cone>
+      <a-text value="Next" color="red" position="0 0 0" rotation="0 0 0" align="center" scale="1 1 1"></a-text>
 
     </a-marker>
 
     <!-- Left Arrow Marker -->
     <a-marker id="prevMarker" type="pattern" url="markers/pattern-letterC.patt">
 
-      <a-cone position="0 0 0" rotation="0 -90 0" scale="0.5 0.5 0.5" height="0.4" radius-bottom="0.2"
-        color="red"></a-cone>
+      <a-text value="Prev" color="red" position="0 0 0" rotation="0 0 0" align="center" scale="1 1 1"></a-text>
+
+    </a-marker>
+
+    <!-- Scale Toggle Marker -->
+    <a-marker id="scaleMarker" type="pattern" url="markers/pattern-letterD.patt">
+
+      <a-text id="scaleText" value="+" color="green" position="0 0 0" align="center" scale="1 1 1"></a-text>
 
     </a-marker>
 
@@ -43,7 +48,7 @@
     <a-entity camera></a-entity>
 
   </a-scene>
-    <!-- Own Script for logic handeling -->
+  <!-- Own Script for logic handeling -->
   <script src="script.js"></script>
 </body>
 

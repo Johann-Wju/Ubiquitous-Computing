@@ -69,25 +69,35 @@ document.addEventListener("DOMContentLoaded", () => {
       switchScene("prev");
     }
   });
+  // 🔁 Scaling via marker (toggle between + and -)
+  const scaleMarker = document.querySelector("#scaleMarker");
+  const scaleText = document.querySelector("#scaleText");
+  let scalingUp = true;
+  let scaleSeenTime = null;
 
-  // ✅ Handle + / - keys for scaling
-  window.addEventListener("keydown", (e) => {
-    const model = document.querySelector("#activeModel");
-    if (!model) return;
+  scaleMarker.addEventListener("markerFound", () => {
+    scaleSeenTime = Date.now();
 
-    const scale = model.getAttribute("scale");
+    // Toggle mode
+    scalingUp = !scalingUp;
 
-    if (e.key === "+") {
+    // Update visible text
+    scaleText.setAttribute("value", scalingUp ? "+" : "-");
+  });
+
+  scaleMarker.addEventListener("markerLost", () => {
+    const heldTime = Date.now() - scaleSeenTime;
+    if (heldTime > 500) {
+      const model = document.querySelector("#activeModel");
+      if (!model) return;
+
+      const scale = model.getAttribute("scale");
+      const factor = scalingUp ? 1.1 : 0.9;
+
       model.setAttribute("scale", {
-        x: scale.x * 1.1,
-        y: scale.y * 1.1,
-        z: scale.z * 1.1
-      });
-    } else if (e.key === "-") {
-      model.setAttribute("scale", {
-        x: scale.x * 0.9,
-        y: scale.y * 0.9,
-        z: scale.z * 0.9
+        x: scale.x * factor,
+        y: scale.y * factor,
+        z: scale.z * factor
       });
     }
   });
