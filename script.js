@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const model = document.createElement("a-gltf-model");
     model.setAttribute("src", modelPaths[index]);
     model.setAttribute("position", "0 0 0");
-    model.setAttribute("scale", "1 1 1");
+    model.setAttribute("scale", "2 2 2");
     model.setAttribute("rotation", "0 0 0");
 
     modelContainer.appendChild(model);

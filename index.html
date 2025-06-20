@@ -3,19 +3,27 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Food around the World</title>
+  <title>Virtual Cookbook</title>
+  
+   <!-- Imported Scripts -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div id="version-tag">v1.2</div>
+  <div id="version-tag">v1.3</div>
   <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1920; sourceHeight: 1080;">
 
-    <!-- Your custom main marker -->
+    <!-- Sky Texture gets initialized -->
+    <a-sky src="texture_background/warm_restaurant_4k.jpg"></a-sky>
+
+    <!-- Custom main marker container -->
     <a-marker type="pattern" url="markers/pattern-letterA.patt">
+
       <a-entity id="modelContainer"></a-entity>
+
     </a-marker>
 
     <!-- Right Arrow Marker -->
@@ -34,11 +42,11 @@
 
     </a-marker>
 
-    <!-- 🎥 Static camera -->
+    <!-- Static camera -->
     <a-entity camera></a-entity>
 
   </a-scene>
-
+    <!-- Own Script for logic handeling -->
   <script src="script.js"></script>
 </body>
 
