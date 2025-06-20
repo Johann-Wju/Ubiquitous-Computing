@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   const scaleMarker = document.querySelector("#scaleMarker");
   const scaleBox = document.querySelector("#scaleBox");
-  let scalingUp = true;  // ✅ define before using
+  let scalingUp = true;
   let scaleSeenTime = null;
 
   scaleMarker.addEventListener("markerFound", () => {
@@ -80,16 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle mode
     scalingUp = !scalingUp;
 
-    // Update box shape to represent + or -
-    if (scalingUp) {
-      // "+" shape: tall narrow box
-      scaleBox.setAttribute("width", 0.1);
-      scaleBox.setAttribute("height", 0.4);
-    } else {
-      // "-" shape: wide flat box
-      scaleBox.setAttribute("width", 0.4);
-      scaleBox.setAttribute("height", 0.1);
-    }
+    // Update box color to represent action
+    scaleBox.setAttribute("color", scalingUp ? "blue" : "red");
   });
 
   scaleMarker.addEventListener("markerLost", () => {
@@ -108,4 +100,5 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
+
 });
