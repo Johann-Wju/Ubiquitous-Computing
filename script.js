@@ -69,10 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
       switchScene("prev");
     }
   });
-  // 🔁 Scaling via marker (toggle between + and -)
   const scaleMarker = document.querySelector("#scaleMarker");
-  const scaleText = document.querySelector("#scaleText");
-  let scalingUp = true;
+  const scaleBox = document.querySelector("#scaleBox");
+  let scalingUp = true;  // ✅ define before using
   let scaleSeenTime = null;
 
   scaleMarker.addEventListener("markerFound", () => {
@@ -81,8 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle mode
     scalingUp = !scalingUp;
 
-    // Update visible text
-    scaleText.setAttribute("value", scalingUp ? "+" : "-");
+    // Update box shape to represent + or -
+    if (scalingUp) {
+      // "+" shape: tall narrow box
+      scaleBox.setAttribute("width", 0.1);
+      scaleBox.setAttribute("height", 0.4);
+    } else {
+      // "-" shape: wide flat box
+      scaleBox.setAttribute("width", 0.4);
+      scaleBox.setAttribute("height", 0.1);
+    }
   });
 
   scaleMarker.addEventListener("markerLost", () => {
