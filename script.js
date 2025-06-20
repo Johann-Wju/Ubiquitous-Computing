@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modelContainer.innerHTML = "";
 
     const model = document.createElement("a-gltf-model");
+    model.setAttribute("id", "activeModel"); // ⬅️ Add ID so we can find it later
     model.setAttribute("src", modelPaths[index]);
     model.setAttribute("position", "0 0 0");
     model.setAttribute("scale", "2 2 2");
@@ -66,6 +67,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const heldTime = Date.now() - prevSeenTime;
     if (heldTime > 500) {
       switchScene("prev");
+    }
+  });
+
+  // ✅ Handle + / - keys for scaling
+  window.addEventListener("keydown", (e) => {
+    const model = document.querySelector("#activeModel");
+    if (!model) return;
+
+    const scale = model.getAttribute("scale");
+
+    if (e.key === "+") {
+      model.setAttribute("scale", {
+        x: scale.x * 1.1,
+        y: scale.y * 1.1,
+        z: scale.z * 1.1
+      });
+    } else if (e.key === "-") {
+      model.setAttribute("scale", {
+        x: scale.x * 0.9,
+        y: scale.y * 0.9,
+        z: scale.z * 0.9
+      });
     }
   });
 });
