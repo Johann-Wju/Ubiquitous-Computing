@@ -30,9 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicMarker = document.querySelector("#musicMarker");
   const musicPlayer = document.querySelector("#musicPlayer");
 
-  // Ensure music doesn't play at start
-  musicPlayer.components.sound.stopSound();
-
   let cooldown = false;
   let musicCooldown = false;
   let musicPlaying = false;
