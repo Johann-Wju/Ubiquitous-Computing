@@ -40,25 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let nextSeenTime = null;
   let prevSeenTime = null;
 
-  // 🔴🔒 Blocking state
-  let blockActive = false;
-  const stopMarker = document.querySelector("#stopMarker");
-  const stopIndicator = document.querySelector("#stopIndicator");
-
-  stopIndicator.setAttribute("color", "green"); // Ensure it starts green
-
-  stopMarker.addEventListener("markerFound", () => {
-    blockActive = true;
-    stopIndicator.setAttribute("color", "red");
-  });
-
-  stopMarker.addEventListener("markerLost", () => {
-    blockActive = false;
-    stopIndicator.setAttribute("color", "green");
-  });
-
   function switchScene(direction) {
-    if (cooldown || blockActive) return;
+    if (cooldown) return;
 
     if (direction === "next") {
       currentIndex = (currentIndex + 1) % modelPaths.length;
@@ -73,12 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   nextMarker.addEventListener("markerFound", () => {
-    if (blockActive) return;
     nextSeenTime = Date.now();
   });
 
   nextMarker.addEventListener("markerLost", () => {
-    if (blockActive || !nextSeenTime) return;
+    if (!nextSeenTime) return;
     const heldTime = Date.now() - nextSeenTime;
     if (heldTime > 500) {
       switchScene("next");
@@ -87,12 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   prevMarker.addEventListener("markerFound", () => {
-    if (blockActive) return;
     prevSeenTime = Date.now();
   });
 
   prevMarker.addEventListener("markerLost", () => {
-    if (blockActive || !prevSeenTime) return;
+    if (!prevSeenTime) return;
     const heldTime = Date.now() - prevSeenTime;
     if (heldTime > 500) {
       switchScene("prev");
@@ -101,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   musicMarker.addEventListener("markerFound", () => {
-    if (blockActive || musicCooldown) return;
+    if (musicCooldown) return;
 
     musicCooldown = true;
     setTimeout(() => musicCooldown = false, 1000);
