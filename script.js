@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicMarker = document.querySelector("#musicMarker");
   const musicPlayer = document.querySelector("#musicPlayer");
 
-  // Safety: force music to not play on load
+  // Ensure music doesn't play at start
   musicPlayer.components.sound.stopSound();
 
   let cooldown = false;
@@ -56,10 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   nextMarker.addEventListener("markerFound", () => {
+    console.log("Next marker found");
     nextSeenTime = Date.now();
   });
 
   nextMarker.addEventListener("markerLost", () => {
+    console.log("Next marker lost");
     if (!nextSeenTime) return;
     const heldTime = Date.now() - nextSeenTime;
     if (heldTime > 500) {
@@ -69,10 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   prevMarker.addEventListener("markerFound", () => {
+    console.log("Prev marker found");
     prevSeenTime = Date.now();
   });
 
   prevMarker.addEventListener("markerLost", () => {
+    console.log("Prev marker lost");
     if (!prevSeenTime) return;
     const heldTime = Date.now() - prevSeenTime;
     if (heldTime > 500) {
@@ -82,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   musicMarker.addEventListener("markerFound", () => {
+    console.log("Music marker found");
     if (musicCooldown) return;
 
     musicCooldown = true;
