@@ -11,11 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const modelContainer = document.querySelector("#modelContainer");
 
   function loadModel(index) {
-    // Clear previous model
     modelContainer.innerHTML = "";
 
     const model = document.createElement("a-gltf-model");
-    model.setAttribute("id", "activeModel"); // ⬅️ Add ID so we can find it later
+    model.setAttribute("id", "activeModel");
     model.setAttribute("src", modelPaths[index]);
     model.setAttribute("position", "0 0 0");
     model.setAttribute("scale", "2 2 2");
@@ -24,17 +23,37 @@ document.addEventListener("DOMContentLoaded", () => {
     modelContainer.appendChild(model);
   }
 
-  loadModel(currentIndex); // Initial model
+  loadModel(currentIndex);
 
   const nextMarker = document.querySelector("#nextMarker");
   const prevMarker = document.querySelector("#prevMarker");
+  const musicMarker = document.querySelector("#musicMarker");
+  const musicPlayer = document.querySelector("#musicPlayer");
 
   let cooldown = false;
+  let musicCooldown = false;
+  let musicPlaying = false;
+
   let nextSeenTime = null;
   let prevSeenTime = null;
 
+  // 🔴🔒 Blocking state
+  let blockActive = false;
+  const stopMarker = document.querySelector("#stopMarker");
+  const stopIndicator = document.querySelector("#stopIndicator");
+
+  stopMarker.addEventListener("markerFound", () => {
+    blockActive = true;
+    stopIndicator.setAttribute("color", "red");
+  });
+
+  stopMarker.addEventListener("markerLost", () => {
+    blockActive = false;
+    stopIndicator.setAttribute("color", "green");
+  });
+
   function switchScene(direction) {
-    if (cooldown) return;
+    if (cooldown || blockActive) return;
 
     if (direction === "next") {
       currentIndex = (currentIndex + 1) % modelPaths.length;
@@ -49,56 +68,49 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   nextMarker.addEventListener("markerFound", () => {
+    if (blockActive) return;
     nextSeenTime = Date.now();
   });
 
   nextMarker.addEventListener("markerLost", () => {
+    if (blockActive || !nextSeenTime) return;
     const heldTime = Date.now() - nextSeenTime;
     if (heldTime > 500) {
       switchScene("next");
     }
+    nextSeenTime = null;
   });
 
   prevMarker.addEventListener("markerFound", () => {
+    if (blockActive) return;
     prevSeenTime = Date.now();
   });
 
   prevMarker.addEventListener("markerLost", () => {
+    if (blockActive || !prevSeenTime) return;
     const heldTime = Date.now() - prevSeenTime;
     if (heldTime > 500) {
       switchScene("prev");
     }
-  });
-  const scaleMarker = document.querySelector("#scaleMarker");
-  const scaleBox = document.querySelector("#scaleBox");
-  let scalingUp = true;
-  let scaleSeenTime = null;
-
-  scaleMarker.addEventListener("markerFound", () => {
-    scaleSeenTime = Date.now();
-
-    // Toggle mode
-    scalingUp = !scalingUp;
-
-    // Update box color to represent action
-    scaleBox.setAttribute("color", scalingUp ? "blue" : "red");
+    prevSeenTime = null;
   });
 
-  scaleMarker.addEventListener("markerLost", () => {
-    const heldTime = Date.now() - scaleSeenTime;
-    if (heldTime > 500) {
-      const model = document.querySelector("#activeModel");
-      if (!model) return;
+  musicMarker.addEventListener("markerFound", () => {
+    if (blockActive || musicCooldown) return;
 
-      const scale = model.getAttribute("scale");
-      const factor = scalingUp ? 1.1 : 0.9;
+    musicCooldown = true;
+    setTimeout(() => musicCooldown = false, 1000);
 
-      model.setAttribute("scale", {
-        x: scale.x * factor,
-        y: scale.y * factor,
-        z: scale.z * factor
-      });
+    if (musicPlaying) {
+      if (musicPlayer.components.sound) {
+        musicPlayer.components.sound.stopSound();
+      }
+      musicPlaying = false;
+    } else {
+      if (musicPlayer.components.sound) {
+        musicPlayer.components.sound.playSound();
+      }
+      musicPlaying = true;
     }
   });
-
 });
