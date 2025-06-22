@@ -30,6 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicMarker = document.querySelector("#musicMarker");
   const musicPlayer = document.querySelector("#musicPlayer");
 
+  // Safety: force music to not play on load
+  musicPlayer.components.sound.stopSound();
+
   let cooldown = false;
   let musicCooldown = false;
   let musicPlaying = false;
@@ -41,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let blockActive = false;
   const stopMarker = document.querySelector("#stopMarker");
   const stopIndicator = document.querySelector("#stopIndicator");
+
+  stopIndicator.setAttribute("color", "green"); // Ensure it starts green
 
   stopMarker.addEventListener("markerFound", () => {
     blockActive = true;
