@@ -68,7 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Model Loader
   // ------------------------------
   function loadModel(index) {
-    modelContainer.innerHTML = ""; // Clear previous model
+    // Clear previous model
+    modelContainer.innerHTML = "";
 
     const model = document.createElement("a-gltf-model");
     const modelData = modelPaths[index];
@@ -106,7 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     loadModel(currentIndex);
 
     cooldown = true;
-    setTimeout(() => cooldown = false, 1000); // Prevent rapid switching
+    // Prevent spamming
+    setTimeout(() => cooldown = false, 1000);
   }
 
   // ------------------------------
@@ -157,7 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (musicCooldown) return;
 
     musicCooldown = true;
-    setTimeout(() => musicCooldown = false, 1000); // Prevent spamming
+    // Prevent spamming
+    setTimeout(() => musicCooldown = false, 1000);
 
     if (musicPlaying) {
       if (musicPlayer.components.sound) {
@@ -185,13 +188,14 @@ document.addEventListener("DOMContentLoaded", () => {
     stopVisibilityCheckTimeout = setTimeout(() => {
       stopValid = true;
       console.log("STOP marker held long enough to be considered valid.");
-    }, 1000); // You can tweak this to 1500–2000ms
+    }, 1000);
   });
 
   stopMarker.addEventListener("markerLost", () => {
     console.log("STOP marker lost");
 
-    clearTimeout(stopVisibilityCheckTimeout); // Cancel validation timer if early
+    // Cancel validation timer if early
+    clearTimeout(stopVisibilityCheckTimeout);
 
     if (!stopSeenTime || !stopValid) {
       console.log("STOP marker not held long enough. Ignoring.");
