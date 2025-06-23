@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       src: "models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf",
       scale: "1.75 1.75 1.75",
-      position: "1 -2 1",
+      position: "0 -2 1",
       rotation: "0 0 0"
     },
     {
