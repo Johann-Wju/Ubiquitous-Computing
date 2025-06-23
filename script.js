@@ -4,31 +4,36 @@ document.addEventListener("DOMContentLoaded", () => {
       src: "models/pizza_gltf/scene.gltf",
       scale: "3 3 3",
       position: "0.3 0 -2",
-      rotation: "0 0 0"
+      rotation: "0 0 0",
+      recipe: "recipes/Recipe_Pizza.jpg"
     },
     {
       src: "models/chicken_paprika_gltf/scene.gltf",
       scale: "3.5 3.5 3.5",
       position: "0 0 0",
-      rotation: "0 0 0"
+      rotation: "0 0 0",
+      recipe: "recipes/Recipe_Paprikahuhn.jpg"
     },
     {
       src: "models/best_spring_sandwitch_gltf/scene.gltf",
       scale: "8 8 8",
       position: "0 0 0",
-      rotation: "0 0 0"
+      rotation: "0 0 0",
+      recipe: "recipes/Recipe_Sandwich.jpg"
     },
     {
       src: "models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf",
       scale: "1.75 1.75 1.75",
       position: "0 -2 1",
-      rotation: "0 0 0"
+      rotation: "0 0 0",
+      recipe: "recipes/Recipe_Baguette.jpg"
     },
     {
       src: "models/langos_without_topping_gltf/scene.gltf",
       scale: "1.5 1.5 1.5",
       position: "0 0 0",
-      rotation: "0 0 0"
+      rotation: "0 0 0",
+      recipe: "recipes/Recipe_Langos.jpg"
     }
   ];
 
@@ -47,6 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
     model.setAttribute("rotation", modelData.rotation);
 
     modelContainer.appendChild(model);
+    
+    const recipeImage = document.querySelector("#recipeImage");
+    if (recipeImage && modelData.recipe) {
+      recipeImage.setAttribute("src", modelData.recipe);
+    }
+
   }
 
   loadModel(currentIndex);
