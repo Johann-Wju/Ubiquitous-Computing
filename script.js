@@ -4,31 +4,31 @@ document.addEventListener("DOMContentLoaded", () => {
       src: "models/pizza_gltf/scene.gltf",
       scale: "3 3 3",
       position: "0.3 0 -2",
-      rotation: "0 0 35"
+      rotation: "0 0 0"
     },
     {
       src: "models/chicken_paprika_gltf/scene.gltf",
       scale: "3.5 3.5 3.5",
       position: "0 0 0",
-      rotation: "0 0 35"
+      rotation: "0 0 0"
     },
     {
       src: "models/best_spring_sandwitch_gltf/scene.gltf",
       scale: "8 8 8",
       position: "0 0 0",
-      rotation: "0 0 35"
+      rotation: "0 0 0"
     },
     {
       src: "models/french_mini_baguette_on_a_cutting_board_gltf/scene.gltf",
       scale: "1.75 1.75 1.75",
       position: "1 -2 1",
-      rotation: "0 0 35"
+      rotation: "0 0 0"
     },
     {
       src: "models/langos_without_topping_gltf/scene.gltf",
       scale: "1.25 1.25 1.25",
       position: "0 0 0",
-      rotation: "0 0 35"
+      rotation: "0 0 0"
     }
   ];
 
