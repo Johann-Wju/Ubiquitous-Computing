@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let cooldown = false;
   let musicCooldown = false;
   let musicPlaying = false;
-  let musicSeenTime = null;
   let frozen = false;
 
   let nextSeenTime = null;
@@ -151,44 +150,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // ------------------------------
   musicMarker.addEventListener("markerFound", () => {
     console.log("Music marker found");
-    musicSeenTime = Date.now();
-  });
+    if (musicCooldown) return;
 
-  musicMarker.addEventListener("markerLost", () => {
-    console.log("Music marker lost");
+    musicCooldown = true;
+    setTimeout(() => musicCooldown = false, 1000); // Prevent spamming
 
-    if (!musicSeenTime) return;
-
-    const heldTime = Date.now() - musicSeenTime;
-    musicSeenTime = null;
-
-    if (heldTime > 500) {
-      if (musicCooldown) return;
-
-      musicCooldown = true;
-      setTimeout(() => musicCooldown = false, 1000);
-
-      const soundComponent = musicPlayer.components.sound;
-
-      // Wait until the sound component is fully loaded
-      if (!soundComponent) {
-        console.warn("Sound component not ready yet.");
-        return;
+    if (musicPlaying) {
+      if (musicPlayer.components.sound) {
+        musicPlayer.components.sound.stopSound();
       }
-
-      // Toggle music
-      if (musicPlaying) {
-        soundComponent.stopSound();
-        musicPlaying = false;
-        console.log("Music stopped.");
-      } else {
-        // Play sound only if not already playing
-        if (!soundComponent.isPlaying) {
-          soundComponent.playSound();
-          musicPlaying = true;
-          console.log("Music started.");
-        }
+      musicPlaying = false;
+    } else {
+      if (musicPlayer.components.sound) {
+        musicPlayer.components.sound.playSound();
       }
+      musicPlaying = true;
     }
   });
 
