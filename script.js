@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cooldown = false;
   let musicCooldown = false;
   let musicPlaying = false;
+  let musicSeenTime = null;
   let frozen = false;
 
   let nextSeenTime = null;
@@ -150,21 +151,41 @@ document.addEventListener("DOMContentLoaded", () => {
   // ------------------------------
   musicMarker.addEventListener("markerFound", () => {
     console.log("Music marker found");
-    if (musicCooldown) return;
+    musicSeenTime = Date.now();
+  });
 
-    musicCooldown = true;
-    setTimeout(() => musicCooldown = false, 1000); // Prevent spamming
+  musicMarker.addEventListener("markerLost", () => {
+    console.log("Music marker lost");
 
-    if (musicPlaying) {
-      if (musicPlayer.components.sound) {
-        musicPlayer.components.sound.stopSound();
+    if (!musicSeenTime) return;
+
+    const heldTime = Date.now() - musicSeenTime;
+    musicSeenTime = null;
+
+    if (heldTime > 500 && !frozen) {
+      if (musicCooldown) return;
+
+      musicCooldown = true;
+      setTimeout(() => musicCooldown = false, 1000); // debounce
+
+      const soundComponent = musicPlayer.components.sound;
+
+      if (!soundComponent) {
+        console.warn("No sound component found on musicPlayer");
+        return;
       }
-      musicPlaying = false;
-    } else {
-      if (musicPlayer.components.sound) {
-        musicPlayer.components.sound.playSound();
+
+      if (musicPlaying && soundComponent.isPlaying) {
+        soundComponent.stopSound();
+        musicPlaying = false;
+        console.log("Music stopped.");
+      } else if (!musicPlaying && !soundComponent.isPlaying) {
+        soundComponent.playSound();
+        musicPlaying = true;
+        console.log("Music started.");
+      } else {
+        console.log("Music state unchanged.");
       }
-      musicPlaying = true;
     }
   });
 
