@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let frozen = false;
   let stopSeenTime = null;
+  let stopValid = false;
+  let stopVisibilityCheckTimeout = null;
 
   function switchScene(direction) {
     if (cooldown || frozen) return;
@@ -145,20 +147,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
   stopMarker.addEventListener("markerFound", () => {
     console.log("STOP marker found");
+
     stopSeenTime = Date.now();
+    stopValid = false;
+
+    // Begin timer to validate marker visibility after 1 second
+    stopVisibilityCheckTimeout = setTimeout(() => {
+      stopValid = true;
+      console.log("STOP marker held long enough to be considered valid.");
+    }, 1000); // adjust to 1500 or 2000ms if needed
   });
 
   stopMarker.addEventListener("markerLost", () => {
     console.log("STOP marker lost");
-    if (!stopSeenTime) return;
 
-    const heldTime = Date.now() - stopSeenTime;
+    // Cancel the validation timer in case it's still running
+    clearTimeout(stopVisibilityCheckTimeout);
 
-    if (heldTime > 500) {
-      frozen = !frozen;  // Toggle freeze
-      console.log(`Freeze state is now: ${frozen}`);
+    if (!stopSeenTime || !stopValid) {
+      console.log("STOP marker not held long enough. Ignoring.");
+      stopSeenTime = null;
+      stopValid = false;
+      return;
     }
 
+    // Marker was valid, toggle freeze
+    frozen = !frozen;
+    console.log(`Freeze state is now: ${frozen}`);
+
+    // Reset
     stopSeenTime = null;
+    stopValid = false;
   });
 });
