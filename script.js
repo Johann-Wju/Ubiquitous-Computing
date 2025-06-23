@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     model.setAttribute("rotation", modelData.rotation);
 
     modelContainer.appendChild(model);
-    
+
     const recipeImage = document.querySelector("#recipeImage");
     if (recipeImage && modelData.recipe) {
       recipeImage.setAttribute("src", modelData.recipe);
@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevMarker = document.querySelector("#prevMarker");
   const musicMarker = document.querySelector("#musicMarker");
   const musicPlayer = document.querySelector("#musicPlayer");
+  const stopMarker = document.querySelector("#stopMarker");
 
   let cooldown = false;
   let musicCooldown = false;
@@ -74,8 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let nextSeenTime = null;
   let prevSeenTime = null;
 
+  let frozen = false;
+  let stopSeenTime = null;
+
   function switchScene(direction) {
-    if (cooldown) return;
+    if (cooldown || frozen) return;
 
     if (direction === "next") {
       currentIndex = (currentIndex + 1) % modelPaths.length;
@@ -137,5 +141,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       musicPlaying = true;
     }
+  });
+
+  stopMarker.addEventListener("markerFound", () => {
+    console.log("STOP marker found");
+    stopSeenTime = Date.now();
+  });
+
+  stopMarker.addEventListener("markerLost", () => {
+    console.log("STOP marker lost");
+    if (!stopSeenTime) return;
+
+    const heldTime = Date.now() - stopSeenTime;
+
+    if (heldTime > 500) {
+      frozen = !frozen;  // Toggle freeze
+      console.log(`Freeze state is now: ${frozen}`);
+    }
+
+    stopSeenTime = null;
   });
 });
