@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cooldown = false;
   let musicCooldown = false;
   let musicPlaying = false;
+  let musicSeenTime = null;
   let frozen = false;
 
   let nextSeenTime = null;
@@ -150,21 +151,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // ------------------------------
   musicMarker.addEventListener("markerFound", () => {
     console.log("Music marker found");
-    if (musicCooldown) return;
+    musicSeenTime = Date.now();
+  });
 
-    musicCooldown = true;
-    setTimeout(() => musicCooldown = false, 1000); // Prevent spamming
+  musicMarker.addEventListener("markerLost", () => {
+    console.log("Music marker lost");
 
-    if (musicPlaying) {
-      if (musicPlayer.components.sound) {
+    if (!musicSeenTime) return;
+    const heldTime = Date.now() - musicSeenTime;
+    musicSeenTime = null;
+
+    if (heldTime > 500) {
+      if (!musicPlayer.components.sound) {
+        console.warn("Sound component not ready.");
+        return;
+      }
+
+      if (musicPlaying) {
         musicPlayer.components.sound.stopSound();
-      }
-      musicPlaying = false;
-    } else {
-      if (musicPlayer.components.sound) {
+        musicPlaying = false;
+      } else {
         musicPlayer.components.sound.playSound();
+        musicPlaying = true;
       }
-      musicPlaying = true;
     }
   });
 
