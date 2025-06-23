@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       src: "models/langos_without_topping_gltf/scene.gltf",
-      scale: "1.25 1.25 1.25",
+      scale: "1.5 1.5 1.5",
       position: "0 0 0",
       rotation: "0 0 0"
     }
