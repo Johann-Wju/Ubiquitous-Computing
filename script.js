@@ -162,29 +162,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const heldTime = Date.now() - musicSeenTime;
     musicSeenTime = null;
 
-    if (heldTime > 500 && !frozen) {
+    if (heldTime > 500) {
       if (musicCooldown) return;
 
       musicCooldown = true;
-      setTimeout(() => musicCooldown = false, 1000); // debounce
+      setTimeout(() => musicCooldown = false, 1000);
 
       const soundComponent = musicPlayer.components.sound;
 
+      // Wait until the sound component is fully loaded
       if (!soundComponent) {
-        console.warn("No sound component found on musicPlayer");
+        console.warn("Sound component not ready yet.");
         return;
       }
 
-      if (musicPlaying && soundComponent.isPlaying) {
+      // Toggle music
+      if (musicPlaying) {
         soundComponent.stopSound();
         musicPlaying = false;
         console.log("Music stopped.");
-      } else if (!musicPlaying && !soundComponent.isPlaying) {
-        soundComponent.playSound();
-        musicPlaying = true;
-        console.log("Music started.");
       } else {
-        console.log("Music state unchanged.");
+        // Play sound only if not already playing
+        if (!soundComponent.isPlaying) {
+          soundComponent.playSound();
+          musicPlaying = true;
+          console.log("Music started.");
+        }
       }
     }
   });
